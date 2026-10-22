@@ -5,7 +5,7 @@ import statistics
 class ZScoreDetector:
     """Streaming anomaly detector: compares each reading with the previous `window` readings."""
 
-    def __init__(self, window=12, threshold=5.0, high=10.0, medium=7.0):
+    def __init__(self, window=12, threshold=5.0, high=30.0, medium=10.0):
         self.window = window
         self.threshold = threshold
         self.medium = medium   
