@@ -1,4 +1,5 @@
 import json
+import os
 from datetime import datetime
 
 import redis
@@ -11,8 +12,8 @@ INCIDENT_GAP_MIN = 60
 
 
 def main():
-    r = redis.Redis(host="localhost", port=6379, decode_responses=True,
-                    socket_timeout=30, socket_connect_timeout=10)
+    r = redis.Redis(host=os.getenv("REDIS_HOST", "localhost"), port=6379,
+                    decode_responses=True, socket_timeout=30, socket_connect_timeout=10)
     r.ping()
     conn = get_conn()
     detectors = {}
@@ -52,7 +53,7 @@ def main():
             if new_incident:
                 incidents += 1
                 send_telegram(
-                    f" Anomaly [{severity}]\n"
+                    f"Anomaly [{severity}]\n"
                     f"Metric: {msg['metric']}\n"
                     f"Time: {msg['timestamp']}\n"
                     f"Value: {msg['value']:.2f} (z-score {z:.1f})"

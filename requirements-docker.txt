@@ -1,0 +1,6 @@
+pandas
+redis
+streamlit
+matplotlib
+python-dotenv
+requests

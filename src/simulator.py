@@ -1,5 +1,6 @@
 import argparse
 import json
+import os
 import time
 
 import pandas as pd
@@ -13,7 +14,8 @@ def main():
     parser.add_argument("--limit", type=int, default=0, help="stop after N readings (0 = all)")
     args = parser.parse_args()
 
-    r = redis.Redis(host="localhost", port=6379, decode_responses=True)
+    r = redis.Redis(host=os.getenv("REDIS_HOST", "localhost"), port=6379,
+                    decode_responses=True)
     r.ping()
 
     df = pd.read_csv(args.file, parse_dates=["timestamp"])
